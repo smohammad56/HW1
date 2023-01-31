@@ -28,6 +28,7 @@ int main() {
 	int i = 0;
 	int space_count = 0;
 	int char_count = 0;
+	int char_value = 0;
 
 	struct Book b1;
 	for (int i = 0; i < 26; i++)
@@ -64,13 +65,15 @@ int main() {
 		}
 		else if (line != "Contents:"){
 			for (int j = 0; j < line.size(); j++) {
-				if (int(line[j]) >= 97) 
-					b1.frequency[int(line[j]) - 97] += 1;
+				if (int(line[j]) >= 97)
+					char_value = int(line[j]) - 97;
 				else
-					b1.frequency[int(line[j]) - 65] += 1;
+					char_value = int(line[j]) - 65;
 				if (line[j] == ' ')
 					space_count++;
-				char_count++;
+				else if (char_value >= 0 || char_value <= 25)
+					char_count++;
+					b1.frequency[char_value] += 1;
 			}
 		}
 		i++;
