@@ -13,12 +13,12 @@ Chau Nguyen
 
 //declare the Book structure with all members
 struct Book {
-	std::string title{""};
-	std::string full_name{""};
-	std::string first_name{""};
-	std::string last_name{""};
-	int word_count{0};
-	int line_count{0};
+	std::string title{ "" };
+	std::string full_name{ "" };
+	std::string first_name{ "" };
+	std::string last_name{ "" };
+	int word_count{ 0 };
+	int line_count{ 0 };
 	float frequency[26];
 };
 
@@ -26,7 +26,7 @@ int main() {
 	std::string filename;
 	std::string line;
 	std::ifstream file;
-	std::ofstream output_file{"CardCatalog.txt"};
+	std::ofstream output_file{ "CardCatalog.txt" };
 	char ask_process;
 	char ask_frequency;
 
@@ -40,13 +40,6 @@ int main() {
 		int char_count = 0;
 		int char_value = 0;
 
-		std::string full_name;
-		std::string first_name;
-		std::string last_name;
-		std::string full_name1 = "";
-		std::string first_name1 = "";
-		std::string last_name1 = "";
-
 		//check if file CardCatalog exists, else create it
 
 		if (!(output_file)) {
@@ -54,8 +47,6 @@ int main() {
 		}
 
 		struct Book b1;
-		b1.word_count = 0;
-		b1.line_count = 0;
 		for (int i = 0; i < 26; i++)
 		{
 			b1.frequency[i] = 0;
@@ -68,7 +59,7 @@ int main() {
 			//read file line by line 
 
 			getline(file, line);
-			std::cout << line << std::endl;
+			//std::cout << line << std::endl;
 
 			//store title line into b1
 
@@ -76,29 +67,25 @@ int main() {
 				b1.title = line;
 			}
 
-			//store the name into full_name
+			//store the name into full_name, first_name, last_name
 
 			else if (b1.line_count == 1) {
 				int flag = 0;
-				full_name1 = line;
+				b1.full_name = line;
 				for (int k = 0; k < line.size(); k++) {
 					if (line[k] == ' ') {
 						flag = 1;
 					}
 					if (flag == 1) {
-						last_name1 += line[k];
+						b1.last_name += line[k];
 					}
 					if (flag == 0)
 					{
-						first_name1 += line[k];
+						b1.first_name += line[k];
 					}
 				}
-				last_name1.erase(0, 1);
+				b1.last_name.erase(0, 1);
 
-				full_name = full_name1;
-				first_name = first_name1;
-				last_name = last_name1;
-				
 			}
 
 			//counts numbers of each character, line, and word to provide character count, line count and word count
@@ -130,12 +117,6 @@ int main() {
 
 
 		b1.line_count -= 3;
-		//b1.full_name = b1.first_name + " " + b1.last_name;
-		//memset(&(b1.full_name), 0, sizeof(b1.full_name));
-		b1.full_name = full_name;
-		b1.first_name = first_name;
-		b1.last_name = last_name;
-
 
 		//calculates character frequency using character count 
 
@@ -156,8 +137,17 @@ int main() {
 			output_file << "Last Name: " << b1.last_name << std::endl;
 			output_file << "Line Count: " << b1.line_count << std::endl;
 			output_file << "Word Count: " << b1.word_count << std::endl;
-			//std::cout << "Character Count: " << char_count << std::endl;
 		}
+
+
+		std::cout << "Title: " << b1.title << std::endl;
+		std::cout << "Full Name: " << b1.full_name << std::endl;
+		std::cout << "First Name: " << b1.first_name << std::endl;
+		std::cout << "Last Name: " << b1.last_name << std::endl;
+		std::cout << "Line Count: " << b1.line_count << std::endl;
+		std::cout << "Word Count: " << b1.word_count << std::endl;
+
+
 
 		std::cout << "Would you like to see the letter frequency? (Enter y/n)" << std::endl;
 		std::cin >> ask_frequency;
@@ -167,6 +157,7 @@ int main() {
 		if (ask_frequency == 'y') {
 			for (int i = 0; i < 26; i++)
 			{
+				std::cout << char(i + 97) << ": " << b1.frequency[i] << "%" << std::endl;
 				output_file << char(i + 97) << ": " << b1.frequency[i] << "%" << std::endl;
 			}
 		}
